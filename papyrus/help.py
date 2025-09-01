@@ -12,10 +12,10 @@ def help_info():
     print(f"{LIGHT_SAND}Papyrus{RESET} is a tool that helps you find literature, also known as digital {SUNSET_GLOW}“scribes”{RESET} or {SANDY_BROWN}“papyrus”{RESET}, scattered across the vast {CLAY_BROWN}interwebs{RESET}.")
     print(f"Think of it as your personal librarian, scouring the web for knowledge and bringing it back to you in one place.\n")
 
-    print(f"{TERRA_COTTA}Launch Papyrus.{RESET}")
-    print(f"{COYOTE_BROWN}Enter your query for literature or “scribes.”{RESET}")
-    print(f"{SUNSET_GLOW}Papyrus searches the interwebs for relevant digital scrolls.{RESET}")
-    print(f"{SANDY_BROWN}Browse, save, or export the collected works.{RESET}\n")
+    print(f"{TERRA_COTTA}1   Launch Papyrus.{RESET}")
+    print(f"{COYOTE_BROWN}2   Enter your query for literature or “scribes.”{RESET}")
+    print(f"{SUNSET_GLOW}3   Papyrus searches the interwebs for relevant digital scrolls.{RESET}")
+    print(f"{SANDY_BROWN}4   Browse, save, or export the collected works.{RESET}\n")
 
     while True:
         user_input = input(f"{CLAY_BROWN}[e]{SUNSET_GLOW} to{CLAY_BROWN} Exit:{RESET} ").strip().lower()
