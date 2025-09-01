@@ -17,7 +17,7 @@ art = """....      ..                                                           
         ""                           "             ~`"""
 
 
-def wave_art(delay=0.05):
+def wave_art(delay=0.02):
     shades_of_yellow_ansi = {
         "bright_yellow" : "\033[38;5;226m {}\033[00m",
         "orange_yellow" : "\033[38;5;220m {}\033[00m",
@@ -30,15 +30,16 @@ def wave_art(delay=0.05):
     def prYellow(s): print((shades_of_yellow_ansi_random).format(s))  
     lines = art.splitlines()
     t = 0
-    for _ in range(30):
-        
+    for _ in range(29):
         os.system('cls' if os.name=='nt' else 'clear')
         for j, line in enumerate(lines):
             # wave offset using sine
             offset = int(5 * math.sin(t + j * 0.5))
             prYellow(" " * offset + line)
+            pass
         time.sleep(delay)
         t += 0.3
+
     
 
 wave_art(delay=0.05)
