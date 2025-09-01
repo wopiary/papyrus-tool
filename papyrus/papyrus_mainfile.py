@@ -4,9 +4,12 @@ import os
 from urllib.request import urlretrieve
 import urllib
 import random
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 import requests
-
-site_link = "https://oceanofpdf.com/"
+import sys
 def papyrus_logo():
 
     shades_of_yellow_ansi = {
@@ -41,17 +44,73 @@ def papyrus_logo():
         88                          '8>             ./"
         ""                           "             ~`
 """)
-# papyrus_logo()
 
 def scribere():
+    folder_name = 'Papyrus_Files'
+    site_link = "https://oceanofpdf.com/?s="
+
+    #FOLDER TO STORE FILES
+    if not os.path.exists(folder_name):
+        print('🔃 Creating folder... ', end='\r')
+
+        os.mkdir(folder_name)
+    else:
+        print('✅ Folder exists.', end='\r')   
+        pass
+         
     time.sleep(1)
-    print("\033[38;2;255;127;80m➤ Book Name: \033[0m", end='')
-    searched_book_name = input(' ')
-# scribere()
+
+    #SEARCH FOR BOOK TITLES
+    search_query = input("\033[38;2;255;127;80m➤ Search Book Name: \033[0m").replace(' ','+')
+    if len(search_query.strip()) == 0:
+        return main()
+    search_url = site_link + search_query.replace(' ', "+")
+
+    #SCRAPE INFO
+    chrome_options = Options()
+
+    service = Service(log_path="NUL") 
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver.get(search_url)
+    time.sleep(5)
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    book_elements = soup.select("article[aria-label]")
+    book_infos = soup.select("div.postmetainfo")
+
+    driver.quit()
+
+    #SHOWING BOOK TITLES
+    print(f'''\n══════════════════════════════════════════════════════════════════════════════════
+Literature Scan Results...
+══════════════════════════════════════════════════════════════════════════════════''')
+    for num, (book_title, info) in enumerate(zip(book_elements, book_infos),start=1):
+        title = (
+            book_title['aria-label']
+            .replace('Download', '')
+            .replace('[PDF]', '')
+            .replace('[EPUB]', '')
+            .strip()
+        )
+        book_metadata = info.get_text(strip=True,  separator=" ")
+        
+
+        print(f"\n  └─ [{num}] {title}\n    {book_metadata:5}")
+
+    print("""\n\n   [✓] Scan complete: Biblia extracted
+   [✓] All files can be downloaded""")
+    user_book_num_input = input("\n➤   Enter Book #: ")
+
+
+
+
+
+
+
 
 def main():
     os.system('cls' if os.name=='nt' else 'clear')
     papyrus_logo()
-    time.sleep(0.5)
     print('\n')
     scribere()
+
+ 
